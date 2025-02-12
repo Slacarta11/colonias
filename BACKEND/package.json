@@ -1,0 +1,17 @@
+{
+    "name": "colonias-backend",
+    "version": "0.1",
+    "description": "aplicación para venta de perfumes",
+    "scripts": {
+      "start": "node src/app.js"
+    },
+    "author": "Samuel Lacarta",
+    "license": "GPL-2.0-only",
+   
+    "dependencies": {
+      "express": "^4.21.1",
+      "cors":"^2.8.5",
+      "sqlite3":"^5.1.1",
+      "knex":"^3.1.0"
+    }
+}
