@@ -25,10 +25,10 @@ app.post('/colonias', async (req, res) =>{
         marca: req.body.marca,
         nombre: req.body.nombre,
         materiales: req.body.materiales
-    });
+    }); 
     res.status(201).json({});
 });
 
 app.listen(8080, () => {
-    console.log('Iniciando el backend en el puerto 8080');
+    console.log('Iniciando el backend en el puerto 8081');
 });
