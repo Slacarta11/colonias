@@ -17,7 +17,12 @@ const db = knex({//aqui le estamos diciendo que tenemos una base de datos, hay q
 
 app.get('/colonias', async (req, res) => { //Con esto veré los datos de las colonias en formato json
     const colonias = await db('colonias').select('*');//aquí consultará en la base de datos TODAS las colonias
-    res.json(colonias);  // Operaciones de get son para ver información
+    res.status(200).json(colonias);  // Operaciones de get son para ver información
+});
+
+app.get('/colonias/:coloniaID', async (req, res) => {
+  const colonias = await db("colonias").select("*").where({ id: req.params.coloniaID}).first();
+  res.status(200).json(colonias);
 });
 
 app.post('/colonias', async (req, res) => {
