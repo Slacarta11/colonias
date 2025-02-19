@@ -28,26 +28,3 @@ window.readColonias = function () { //creamos metodo readcolonias
       });
     });
 };
-
-window.addColonia = function () {
-  const Marca = document.getElementById("Marca").value;
-  const Nombre = document.getElementById("Nombre").value;
-  const Materiales = document.getElementById("Materiales").value;
-
-  const nuevaColonia = { // Creamos la variable con los datos a enviar
-    Marca,
-    Nombre,
-    Materiales,
-  };
- axios
-   .post("http://localhost:8081/colonias", nuevaColonia) // URL de servidor backend
-   .then((response) => {
-     console.log("Colonia añadida", response.data);
-     readColonias(); // Llamar a readColonias para actualizar la lista en la página
-   });
-
-  document.getElementById("Marca").value = "";
-  document.getElementById("Nombre").value = "";
-  document.getElementById("Materiales").value = "";
-   
-};
