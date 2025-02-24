@@ -9,9 +9,9 @@ window.readColonias = function () { //creamos metodo readcolonias
       
       coloniaslist.forEach((colonia) => { //creamos metodo de array a la variable coloniaslist
         
-        const listItem = document.createElement("li"); //crea un nuevo elemento HTML de tipo <li>. Este es un "contenedor" vacío
+        const listItem = document.createElement('li'); //crea un nuevo elemento HTML de tipo <li>. Este es un "contenedor" vacío
         listItem.className = 'list-group-item'
-        listItem.appendChild(document.createTextNode(colonia.Marca + " " + colonia.Materiales + " " + colonia.Nombre + " " + colonia.ID)// document.createTextNode es una cadena de texto   
+        listItem.appendChild(document.createTextNode(colonia.Marca + " " + colonia.Materiales + " " + colonia.Nombre + " " )// document.createTextNode es una cadena de texto   
         );
         coloniasUl.appendChild(listItem); //appendchild es para añadir lo que este entre parentesis
       });
