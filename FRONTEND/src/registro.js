@@ -5,12 +5,11 @@ window.addColonia = function () {
   const Nombre = document.getElementById("Nombre").value;
   const Materiales = document.getElementById("Materiales").value;
 
-  const nuevaColonia = {
-    // Creamos la variable con los datos a enviar
-    Marca,
-    Nombre,
-    Materiales,
-  };
+  if (Marca,Nombre,Materiales==='') {
+    alert ('Debes rellenar todos los campos para continuar');
+    return;
+  }
+
   axios.post("http://localhost:8081/colonias", {
     Marca: Marca,
     Nombre: Nombre,
