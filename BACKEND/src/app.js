@@ -18,7 +18,7 @@ const db = knex({//aqui le estamos diciendo que tenemos una base de datos, hay q
 
 
 app.get('/colonias', async (req, res) => { //Con esto veré los datos de las colonias en formato json
-    const colonias = await db('colonias').select('*');//aquí consultará en la base de datos TODAS las colonias
+    const colonias = await db('colonias').select('*'); //aquí consultará en la base de datos TODAS las colonias
     res.status(200).json(colonias);  // Operaciones de get son para ver información
 });
 
@@ -29,9 +29,9 @@ app.get('/colonias/:coloniaID', async (req, res) => {
 
 app.post('/colonias', [
 
-    body('Marca').notEmpty().withMessage('Marca es obligatorio'),
-    body('Nombre').notEmpty().withMessage('Nombre es obligatorio'),
-    body('Materiales').notEmpty().withMessage('Materiales es obligatorio')
+    body('Marca').notEmpty().withMessage('Debes indicar una marca'),
+    body('Nombre').notEmpty().withMessage('Debes indicar un nombre'),
+    body('Materiales').notEmpty().withMessage('Debes indicar los materiales')
     ], async (req, res) => {
     
     const errors = validationResult(req);
@@ -51,9 +51,9 @@ app.post('/colonias', [
 
     
 app.put('/colonias/:coloniaID', [
-    body('Marca').notEmpty().withMessage('Marca es obligatorio'),
-    body('Nombre').notEmpty().withMessage('Nombre es obligatorio'),
-    body('Materiales').notEmpty().withMessage('Materiales es obligatorio')
+    body('Marca').notEmpty().withMessage('Debes indicar una marca'),
+    body('Nombre').notEmpty().withMessage('Debes indicar un nombre'),
+    body('Materiales').notEmpty().withMessage('Debes indicar los materiales')
 ], async (req, res) => {
     
     const errors = validationResult(req);
@@ -78,26 +78,68 @@ app.delete('/colonias/:coloniaID', async (req,res) => {
     res.status(204).json({});
 });
 
-/*app.get('/COMENTARIOS', async (req,res) => {
+
+app.get('/COMENTARIOS/:coloniaID', async (req,res) => {
+    const comentario = await db ('COMENTARIOS').select('*').where({ID:req.params.coloniaID}).first();
+    if(!comentario) = return res.status(400).json({'No se ha encontrado el comentario'})
+    res.status(200).json(comentario);
 
 });
 
-app.post('/COMENTARIOS', async (req, res) => { //req peticion que te manda el frontend
-    await db('COMENTARIOS').insert({ //res es lo que mandamos al fronted
-        Descripcion: req.body.Descripcion, //frontend nos envía un texto (json--body) que va a descripcion
-        Valoracion: req.body.Valoracion
 
+
+app.post('/COMENTARIOS', [
+    body('Descripcion').notEmpty().withMessage('La descripción del comentario es obligatoria'),
+    body('Valoracion').notEmpty().withMessage('La valoración es obligatoria'),
+    ], async (req, res) => {
+    const errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { Descripcion, Valoracion } = req.body;
+
+    await db('COMENTARIOS').insert({
+        Descripcion,
+        Valoracion,
     });
-    res.status(200).send({message:'Comentario guardado correcamente'})
+
+    res.status(201).json({ message: 'Se ha guardado su comentario' });
+});
+
+app.put('/comentarios/:comentarioID', [
+    body('comentario').notEmpty().withMessage('El comentario no puede estar vacío'),], async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { comentario } = req.body;
+    const comentarioExistente = await db('comentarios').where({ID: req.params.comentarioID}).first();
+
+    if (!comentarioExistente) {
+        return res.status(404).json({ message: 'Comentario no encontrado' });
+    }
+
+    await db('comentarios').update({ comentario }).where({ID: req.params.comentarioID});
+    res.status(204).json({ message: 'Comentario actualizado exitosamente' });
+});
+
+app.delete('/comentarios/:comentarioID', async (req, res) => {
+    const comentarioExistente = await db('comentarios').where({ID: req.params.comentarioID}).first();
+
+    if (!comentarioExistente) {
+        return res.status(404).json({ message: 'Comentario no encontrado' });
+    }
+
+    await db('comentarios').del().where({ID: req.params.comentarioID});
+    res.status(204).json({ message: 'Se ha eliminado su comentario' });
 });
 
 
-app.get('/colonias', async (req, res) => {
-    const colonias = await db('colonias').select('coloniaId');
 
-});
-
-*/
 app.listen(8081, () => {
     console.log('Iniciando el backend en el puerto 8081');
 });
