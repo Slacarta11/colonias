@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const knex = require('knex');
+const { body, validationResult } = require("express-validator");
+
 
 const app = express();
 app.use(cors());
@@ -25,25 +27,50 @@ app.get('/colonias/:coloniaID', async (req, res) => {
   res.status(200).json(colonias);
 });
 
-app.post('/colonias', async (req, res) => {
+app.post('/colonias', [
+
+    body('Marca').notEmpty().withMessage('Marca es obligatorio'),
+    body('Nombre').notEmpty().withMessage('Nombre es obligatorio'),
+    body('Materiales').notEmpty().withMessage('Materiales es obligatorio')
+    ], async (req, res) => {
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+
     await db('colonias').insert({
         Marca: req.body.Marca,
         Nombre: req.body.Nombre,
         Materiales: req.body.Materiales
     });
-    
+
     res.status(201).json({});
 });
 
-app.put('/colonias/:coloniaID', async (req,res) =>{
+    
+app.put('/colonias/:coloniaID', [
+    body('Marca').notEmpty().withMessage('Marca es obligatorio'),
+    body('Nombre').notEmpty().withMessage('Nombre es obligatorio'),
+    body('Materiales').notEmpty().withMessage('Materiales es obligatorio')
+], async (req, res) => {
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    
     await db("colonias").update({
       Marca: req.body.Marca,
       Nombre: req.body.Nombre,
       Materiales: req.body.Materiales,
-    }).where({ID:req.params.coloniaID});
+    }).where({ ID: req.params.coloniaID });
 
     res.status(204).json({});
 });
+
 
 app.delete('/colonias/:coloniaID', async (req,res) => {
     await db('colonias').del().where({ID: req.params.coloniaID})
