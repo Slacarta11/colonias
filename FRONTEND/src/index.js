@@ -58,9 +58,9 @@ window.readColonias = function () { //creamos metodo readcolonias
     
     if (confirm("¿Está seguro de modificar su colonia?")) {
 
-      if (Marca,Nombre,Materiales==='') {
-      alert ('Debes rellenar todos los campos para continuar');
-      return
+      if (!Marca || !Nombre || !Materiales) {
+        alert("Debes rellenar todos los campos para continuar");
+        return;
       }
 
       axios
