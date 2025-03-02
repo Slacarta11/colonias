@@ -15,7 +15,7 @@ window.readColonias = function () { //creamos metodo readcolonias
         row.innerHTML = '<th>'+ colonia.Marca + '</th>' + 
                         '<th>'+ colonia.Nombre + '</th>' + 
                         '<th>'+ colonia.Materiales + '</th>' + 
-                        '<a class="btn btn-primary" href="modificar.html?ID=' + colonia.ID + '">Modificar</a> <a class="btn btn-danger" href="javascript:eliminarColonia(' + colonia.ID + ')">Eliminar</a>';
+                        '<a class="btn btn-primary" href="modificar.html?ID=' + colonia.ID + '">Modificar</a> <a class="btn btn-danger" href="javascript:eliminarColonia(' + colonia.ID + ')">Eliminar</a><a class="btn btn-primary" href="modificar.html?ID=' + colonia.ID + '">Añadir comentario</a>';
                     
         coloniaTable.appendChild(row);
       });
