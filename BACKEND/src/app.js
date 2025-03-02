@@ -79,13 +79,11 @@ app.delete('/colonias/:coloniaID', async (req,res) => {
 });
 
 
-app.get('/COMENTARIOS/:coloniaID', async (req,res) => {
-    const comentario = await db ('COMENTARIOS').select('*').where({ID:req.params.coloniaID}).first();
-    if(!comentario) = return res.status(400).json({'No se ha encontrado el comentario'})
-    res.status(200).json(comentario);
+app.get('/comentarios/:coloniaID', async (req, res) => {
+    const comentarios = await db('comentarios').select('*').where({colonia_id: req.params.coloniaID});
 
+    res.status(200).json(comentarios);
 });
-
 
 
 app.post('/COMENTARIOS', [
