@@ -5,8 +5,8 @@ window.addColonia = function () {
   const Nombre = document.getElementById("Nombre").value;
   const Materiales = document.getElementById("Materiales").value;
 
-  if (Marca,Nombre,Materiales==='') {
-    alert ('Debes rellenar todos los campos para continuar');
+  if (!Marca || !Nombre || !Materiales) {
+    alert("Debes rellenar todos los campos para continuar");
     return;
   }
 
