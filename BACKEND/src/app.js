@@ -79,17 +79,17 @@ app.delete('/colonias/:coloniaID', async (req,res) => {
 });
 
 
-app.get('/comentarios/:coloniaID', async (req, res) => {
+app.get('/COMENTARIOS/:coloniaID', async (req, res) => {
     const comentarios = await db('comentarios').select('*').where({colonia_id: req.params.coloniaID});
 
     res.status(200).json(comentarios);
 });
 
 
-app.post('/COMENTARIOS', [
+app.post('/COMENTARIOS/:coloniaID', [
     body('Descripcion').notEmpty().withMessage('La descripción del comentario es obligatoria'),
     body('Valoracion').notEmpty().withMessage('La valoración es obligatoria'),
-    ], async (req, res) => {
+], async (req, res) => {
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) {
@@ -101,28 +101,33 @@ app.post('/COMENTARIOS', [
     await db('COMENTARIOS').insert({
         Descripcion,
         Valoracion,
+        colonia_id: req.params.coloniaID,
     });
 
     res.status(201).json({ message: 'Se ha guardado su comentario' });
 });
 
-app.put('/comentarios/:comentarioID', [
-    body('comentario').notEmpty().withMessage('El comentario no puede estar vacío'),], async (req, res) => {
+app.put('/COMENTARIOS/:comentarioID', [
+    body('Descripcion').notEmpty().withMessage('El comentario no puede estar vacío'),
+    body('Valoracion').isInt({ min: 1, max: 5 }).withMessage('La valoración debe ser un número entre 1 y 5'),
+    ], async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { comentario } = req.body;
-    const comentarioExistente = await db('comentarios').where({ID: req.params.comentarioID}).first();
+    const { Descripcion,Valoracion } = req.body;
+    const { comentarioID } = req.params;
+    const comentarioExistente = await db('comentarios').where({ ID: comentarioID }).first();
 
     if (!comentarioExistente) {
         return res.status(404).json({ message: 'Comentario no encontrado' });
     }
 
-    await db('comentarios').update({ comentario }).where({ID: req.params.comentarioID});
-    res.status(204).json({ message: 'Comentario actualizado exitosamente' });
+    await db("comentarios")
+      .update({ Descripcion, Valoracion })
+      .where({ ID: comentarioID });
 });
 
 app.delete('/comentarios/:comentarioID', async (req, res) => {

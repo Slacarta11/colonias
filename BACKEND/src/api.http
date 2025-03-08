@@ -1,0 +1,62 @@
+GET http://localhost:8081/colonias
+
+### operación GET para ver todas las colonias
+
+GET http://localhost:8081/colonias/:coloniaID
+
+### operación GET para ver las colonias por ID
+
+POST http://localhost:8081/colonias
+content-type: application/json
+
+{
+    "Marca":"sadssasdd",
+    "Nombre":"saddssa",
+    "Materiales":"asdsadsa"
+}
+
+### operación PUT para crear colonias
+
+PUT http://localhost:8081/colonias/:coloniaID 
+content-type: application/json
+
+{
+    "Marca":"sadsad",
+    "Nombre":"sadsa",
+    "Materiales":"asdsadsa"
+}
+### operación PUT para modificar colonia por ID
+
+DELETE http://localhost:8081/colonias/:coloniaID
+
+### operación DELETE para eliminar colonias
+
+GET http://localhost:8081/COMENTARIOS/3
+
+
+
+### operación GET para ver los comentarios por ID de colonia
+
+POST http://localhost:8081/COMENTARIOS/3
+content-type: application/json
+
+{
+    "Descripcion":"sadsad",
+    "Valoracion":"sadsa"
+}
+
+### operación POST para crear comentario
+
+PUT http://localhost:8081/COMENTARIOS/17
+content-type: application/json
+
+{
+    "Descripcion":"HOLAA",
+    "Valoracion":"4"
+}
+
+### operación PUT para modificar los comentarios por ID de comentario
+
+DELETE http://localhost:8081/COMENTARIOS/:localhost:8081/COMENTARIOS/:comentarioID
+
+### operación DELETE para eliminar comentarios por ID de comentario
