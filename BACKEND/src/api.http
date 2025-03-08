@@ -10,14 +10,14 @@ POST http://localhost:8081/colonias
 content-type: application/json
 
 {
-    "Marca":"sadssasdd",
-    "Nombre":"saddssa",
-    "Materiales":"asdsadsa"
+    "Marca":"s3231",
+    "Nombre":"saa",
+    "Materiales":"sada"
 }
 
 ### operación PUT para crear colonias
 
-PUT http://localhost:8081/colonias/:coloniaID 
+PUT http://localhost:8081/colonias/:coloniaID
 content-type: application/json
 
 {
@@ -43,11 +43,12 @@ content-type: application/json
 {
     "Descripcion":"sadsad",
     "Valoracion":"sadsa"
+    
 }
 
 ### operación POST para crear comentario
 
-PUT http://localhost:8081/COMENTARIOS/17
+PUT http://localhost:8081/COMENTARIOS/3
 content-type: application/json
 
 {
@@ -57,6 +58,6 @@ content-type: application/json
 
 ### operación PUT para modificar los comentarios por ID de comentario
 
-DELETE http://localhost:8081/COMENTARIOS/:localhost:8081/COMENTARIOS/:comentarioID
+DELETE http://localhost:8081/COMENTARIOS/:
 
 ### operación DELETE para eliminar comentarios por ID de comentario

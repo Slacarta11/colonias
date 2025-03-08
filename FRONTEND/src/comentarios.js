@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Función para leer comentarios
+
 window.readComentarios = function () {
   const coloniaID = new URLSearchParams(window.location.search).get("ID");
   axios
@@ -32,7 +32,7 @@ window.readComentarios = function () {
     });
 };
 
-// Función para agregar un comentario
+
 window.addComentario = function () {
   const coloniaID = new URLSearchParams(window.location.search).get("ID");
   const descripcion = document.getElementById("Descripcion").value;
@@ -67,7 +67,7 @@ window.addComentario = function () {
     });
 };
 
-// Función para eliminar un comentario
+
 window.eliminarComentario = function (comentarioID) {
   if (confirm("¿Estás seguro de eliminar este comentario?")) {
     axios
@@ -90,11 +90,11 @@ window.eliminarComentario = function (comentarioID) {
   }
 };
 
-// Función para modificar un comentario
+
 window.modificarComentario = function () {
   const urlParams = new URLSearchParams(window.location.search);
   const comentarioParam = urlParams.get("ID");
-  console.log(comentarioParam);
+  console.log("Comentario ID:", comentarioParam);
 
   const Descripcion = document.getElementById("Descripcion").value;
   const Valoracion = document.getElementById("Valoracion").value;
@@ -109,18 +109,19 @@ window.modificarComentario = function () {
     return;
   }
 
-  // Realizamos la solicitud PUT si todas las validaciones son correctas
   if (confirm("¿Está seguro de modificar su comentario?")) {
     axios
-      .put(`http://localhost:8081/COMENTARIOS/${comentarioParam}`, {
+      .put("http://localhost:8081/COMENTARIOS/" + comentarioParam, {
         Descripcion: Descripcion,
         Valoracion: Valoracion,
       })
       .then((response) => {
+        console.log("Respuesta de la API:", response); 
         if (response.status === 200) {
           alert("Comentario modificado exitosamente.");
-          window.location.replace("comentarios.html"); // Redirigir a la lista de comentarios
+          console.log("Comentario modificado");
         }
+         window.location.href = `comentarios.html?colonia=${comentarioParam}`;
       })
       .catch((error) => {
         console.error("Error al modificar el comentario:", error);

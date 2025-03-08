@@ -107,28 +107,53 @@ app.post('/COMENTARIOS/:coloniaID', [
     res.status(201).json({ message: 'Se ha guardado su comentario' });
 });
 
-app.put('/COMENTARIOS/:comentarioID', [
-    body('Descripcion').notEmpty().withMessage('El comentario no puede estar vacío'),
-    body('Valoracion').isInt({ min: 1, max: 5 }).withMessage('La valoración debe ser un número entre 1 y 5'),
-    ], async (req, res) => {
+app.put("/COMENTARIOS/:comentarioID",
+  [
+    body("Descripcion").notEmpty().withMessage("El comentario no puede estar vacío"),
+    body("Valoracion").isInt({ min: 1, max: 5 }).withMessage("La valoración debe ser un número entre 1 y 5"),
+  ],
+  async (req, res) => {
+    console.log("Iniciando PUT");
+
     const errors = validationResult(req);
-
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+      console.log("Errores de validación:", errors.array());
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    const { Descripcion,Valoracion } = req.body;
+    const { Descripcion, Valoracion } = req.body;
     const { comentarioID } = req.params;
-    const comentarioExistente = await db('comentarios').where({ ID: comentarioID }).first();
 
-    if (!comentarioExistente) {
-        return res.status(404).json({ message: 'Comentario no encontrado' });
+    console.log("Parametros recibidos:", {
+      comentarioID,
+      Descripcion,
+      Valoracion,
+    });
+
+    try {
+      // Verifica si el comentario existe
+      const comentarioExistente = await db("comentarios").where({ ID: comentarioID }).first();
+      if (!comentarioExistente) {
+        console.log("Comentario no encontrado");
+        return res.status(404).json({ message: "Comentario no encontrado" });
+      }
+
+      console.log("Comentario encontrado, actualizando...");
+
+      // Actualización de la base de datos
+      await db("comentarios").update({ Descripcion, Valoracion }).where({ ID: comentarioID });
+
+      console.log("Comentario actualizado correctamente");
+
+      return res.status(200).json({ message: "Comentario modificado exitosamente" });
+
+    } catch (error) {
+      console.error("Error al procesar la solicitud:", error);
+      return res.status(500).json({ message: "Hubo un error al modificar el comentario." });
     }
+  }
+);
 
-    await db("comentarios")
-      .update({ Descripcion, Valoracion })
-      .where({ ID: comentarioID });
-});
 
 app.delete('/comentarios/:comentarioID', async (req, res) => {
     const comentarioExistente = await db('comentarios').where({ID: req.params.comentarioID}).first();

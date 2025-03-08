@@ -74,7 +74,7 @@ window.readColonias = function () { //creamos metodo readcolonias
 
         .then((response) => {
           if (response.status === 204) {
-            console.log("Se ha modificado la colonia");
+            alert("Se ha modificado la colonia correctamente");
           }
           window.location.replace("index.html");
 

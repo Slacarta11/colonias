@@ -17,12 +17,23 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        h1 {
+        h1, h2 {
             color: #007bff;
             margin-bottom: 20px;
         }
+        .nav-tabs .nav-link.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        .nav-tabs .nav-link {
+            color: #007bff;
+        }
         .table {
             margin-top: 20px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
         }
         .btn {
             border-radius: 8px;
@@ -45,6 +56,9 @@
         .btn-danger:hover {
             background-color: #c82333;
         }
+        hr {
+            border: 1px solid #007bff;
+        }
     </style>
 </head>
 <body onload="readComentarios()">
@@ -59,9 +73,8 @@
                 <a class="nav-link" href="registro.html">Añadir colonia</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="comentarios.html">Comentarios</a>
+                <a class="nav-link active" href="index.html">Comentarios</a>
             </li>
-
         </ul>
 
         <hr/>
@@ -87,9 +100,7 @@
             <thead>
                 <tr>
                     <th>Descripción</th>
-
                     <th>Valoración</th>
-                    
                     <th>Opciones</th>
                 </tr>
             </thead>
