@@ -1,13 +1,13 @@
 import axios from "axios";
 
-window.readColonias = function () { //creamos metodo readcolonias
+window.readColonias = function () { 
   axios
-    .get("http://localhost:8081/colonias") //endpoint de /colonias
+    .get("http://localhost:8081/colonias") 
     .then((response) => {
-      const coloniaslist = response.data; //es la respuesta que da el backend al frontend
-      const coloniaTable = document.getElementById("tableBody"); //document para llamar al HTML, siempre que quieras llamar HTML
+      const coloniaslist = response.data; 
+      const coloniaTable = document.getElementById("tableBody"); 
       
-      coloniaslist.forEach(colonia => { //creamos metodo de array a la variable coloniaslist
+      coloniaslist.forEach(colonia => { 
         
         const row = document.createElement('tr');
         row.id = 'colonia' + colonia.ID;
