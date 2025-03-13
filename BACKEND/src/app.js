@@ -18,7 +18,7 @@ const db = knex({
 
 
 app.get('/colonias', async (req, res) => { 
-    const colonias = await db('colonias').select('*'); as
+    const colonias = await db('colonias').select('*'); 
     res.status(200).json(colonias);  
 });
 
